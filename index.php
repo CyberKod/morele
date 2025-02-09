@@ -22,6 +22,10 @@ if ($titles) {
         echo $recommendation . '<br>';
     }
 
+    echo '<br>' . 'Zwracane są wszystkie tytuły, które składają się z więcej niż 1 słowa:' . '<br>';
+    foreach ($recommendations->getMoreThanOneWordTitles($titles) as $recommendation) {
+        echo $recommendation . '<br>';
+    }
 } else {
     echo 'Obecnie nie posiadamy żadnych rekomendacji.';
 }

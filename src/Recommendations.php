@@ -54,4 +54,26 @@ class Recommendations
             return [self::ERROR_MSG];
         }
     }
+
+    /**
+     * @param array $titles
+     * @return array
+     */
+    public function getMoreThanOneWordTitles(array $titles): array
+    {
+        try {
+            $selectedTitles = [];
+            foreach ($titles as $title) {
+                $titleArr = explode(" ", $title);
+                if (count($titleArr) > 1) {
+                    $selectedTitles[] = $title;
+                }
+            }
+
+            return $selectedTitles;
+        } catch (Throwable $e) {
+            error_log($e->getMessage());
+            return [self::ERROR_MSG];
+        }
+    }
 }
