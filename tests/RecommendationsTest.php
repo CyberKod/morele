@@ -32,4 +32,50 @@ class RecommendationsTest extends TestCase
         $isUnique = count($titles) === count(array_unique($titles));
         $this->assertTrue($isUnique);
     }
+
+    public function testGetWAndEvenTitlesShouldReturnArray(): void
+    {
+        $movies = new Movies();
+        $recommendations = new Recommendations();
+        $titles = $recommendations->getWAndEvenTitles($movies->getUniqueTitles());
+        $this->assertIsArray($titles);
+    }
+
+    public function testGetWAndEvenTitlesShouldReturnWElements(): void
+    {
+        $movies = new Movies();
+        $recommendations = new Recommendations();
+        $titles = $recommendations->getWAndEvenTitles($movies->getUniqueTitles());
+        $selectedTitles = [];
+        foreach ($titles as $title) {
+            if (str_starts_with($title, 'W')) {
+                $selectedTitles[] = $title;
+            }
+        }
+        $this->assertGreaterThan(0, count($selectedTitles));
+    }
+
+    public function testGetWAndEvenTitlesShouldReturnEvenElements(): void
+    {
+        $movies = new Movies();
+        $recommendations = new Recommendations();
+        $titles = $recommendations->getWAndEvenTitles($movies->getUniqueTitles());
+        $selectedTitles = [];
+        foreach ($titles as $title) {
+            $titleTmp = str_replace(Recommendations::TRANSLIT_FROM, Recommendations::TRANSLIT_TO, $title);
+            if (strlen($titleTmp) % 2 === 0) {
+                $selectedTitles[] = $title;
+            }
+        }
+        $this->assertGreaterThan(0, count($selectedTitles));
+    }
+
+    public function testGetWAndEvenTitlesShouldReturnUniqueElements(): void
+    {
+        $movies = new Movies();
+        $recommendations = new Recommendations();
+        $titles = $recommendations->getWAndEvenTitles($movies->getUniqueTitles());
+        $isUnique = count($titles) === count(array_unique($titles));
+        $this->assertTrue($isUnique);
+    }
 }
