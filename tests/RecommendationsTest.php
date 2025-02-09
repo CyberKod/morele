@@ -78,4 +78,36 @@ class RecommendationsTest extends TestCase
         $isUnique = count($titles) === count(array_unique($titles));
         $this->assertTrue($isUnique);
     }
+
+    public function testGetMoreThanOneWordTitlesShouldReturnArray(): void
+    {
+        $movies = new Movies();
+        $recommendations = new Recommendations();
+        $titles = $recommendations->getMoreThanOneWordTitles($movies->getUniqueTitles());
+        $this->assertIsArray($titles);
+    }
+
+    public function testGetMoreThanOneWordTitlesShouldReturnMoreThanOneWordTitles(): void
+    {
+        $movies = new Movies();
+        $recommendations = new Recommendations();
+        $titles = $recommendations->getMoreThanOneWordTitles($movies->getUniqueTitles());
+        $selectedTitles = [];
+        foreach ($titles as $title) {
+            $titleArr = explode(" ", $title);
+            if (count($titleArr) > 1) {
+                $selectedTitles[] = $title;
+            }
+        }
+        $this->assertGreaterThan(0, count($selectedTitles));
+    }
+
+    public function testGetMoreThanOneWordTitlesShouldReturnUniqueElements(): void
+    {
+        $movies = new Movies();
+        $recommendations = new Recommendations();
+        $result = $recommendations->getMoreThanOneWordTitles($movies->getUniqueTitles());
+        $isUnique = count($result) === count(array_unique($result));
+        $this->assertTrue($isUnique);
+    }
 }
