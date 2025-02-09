@@ -17,6 +17,11 @@ if ($titles) {
         echo $recommendation . '<br>';
     }
 
+    echo '<br>' . 'Zwracane są wszystkie filmy na literę W ale tylko jeśli mają parzystą liczbę znaków w tytule:' . '<br>';
+    foreach ($recommendations->getWAndEvenTitles($titles) as $recommendation) {
+        echo $recommendation . '<br>';
+    }
+
 } else {
     echo 'Obecnie nie posiadamy żadnych rekomendacji.';
 }
